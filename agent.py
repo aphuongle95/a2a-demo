@@ -22,29 +22,35 @@ attractions_agent = Agent(
     name="attractions_agent",
     description="Provides information about tourist attractions and sightseeing spots for a given city.",
     instruction="When asked about attractions, suggest popular sightseeing spots and points of interest for the specified city.",
-    model="gemini-2.0-flash",
+    model="gemini-2.5-flash",
 )
 
 # Load mock flight data
 flights_data = load_flights_data()
 
+def flight_query(dep: str, arr: str, date: str):
+    return query_flights_simple(flights_data, dep, arr, date)
+
 flight_agent = Agent(
     name="flight_agent",
     description="Answers flight-related queries using a mock flight dataset.",
     instruction="Provide clear summaries of available flights between cities on specific dates, including airline, flight number, departure/arrival cities, times, and status. If no flights match, politely inform the user.",
-    model="gemini-2.0-flash",
-    tools=[FunctionTool(lambda dep, arr, date: query_flights_simple(flights_data, dep, arr, date))],
+    model="gemini-2.5-flash",
+    tools=[FunctionTool(flight_query)],
 )
 
 # Load mock hotel data
 hotels_data = load_hotels_data()
 
+def hotel_query(city: str, min_rating: float = None, max_price: float = None):
+    return query_hotels(hotels_data, city, min_rating, max_price)
+
 hotel_agent = Agent(
     name="hotel_agent",
     description="Provides hotel recommendations using a mock hotel dataset.",
     instruction="Suggest hotels in a city, applying filters for minimum rating and maximum price. Respond with hotel name, rating, and price. If no hotels match, inform the user.",
-    model="gemini-2.0-flash",
-    tools=[FunctionTool(lambda city, min_rating=None, max_price=None: query_hotels(hotels_data, city, min_rating, max_price))],
+    model="gemini-2.5-flash",
+    tools=[FunctionTool(hotel_query)],
 )
 
 # ExampleTool: Demonstrates multi-agent interactions for travel planning
@@ -98,7 +104,7 @@ root_agent = Agent(
     description="Central coordinator for the AI travel planner. Delegates tasks to weather, hotel, flight, and attractions agents using A2A.",
     instruction="Coordinate all travel planning tasks by delegating to sub-agents. Confirm plans with the user and ensure all information is accurate and safe.",
     global_instruction="You are the root agent for an AI travel planner. Delegate queries to the appropriate sub-agent (weather, hotel, flight, attractions) and confirm the final plan with the user.",
-    model="gemini-2.0-flash",  # Use Gemini 1.5 Flash model
+    model="gemini-2.5-flash",  # Use Gemini 1.5 pro model
     sub_agents=[weather_agent, hotel_agent, flight_agent, attractions_agent],
     tools=[example_tool],  # Add example_tool for demonstration scenarios
 )
