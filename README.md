@@ -19,7 +19,7 @@ pip install -r requirements.txt
 
 ## Usage
 ```bash
-python run/run.py
+python cli.py
 ```
 
 ## Project Structure
