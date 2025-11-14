@@ -34,7 +34,12 @@ def flight_query(dep: str, arr: str, date: str):
 flight_agent = Agent(
     name="flight_agent",
     description="Answers flight-related queries using a mock flight dataset.",
-    instruction="Provide clear summaries of available flights between cities on specific dates, including airline, flight number, departure/arrival cities, times, and status. If no flights match, politely inform the user.",
+    instruction=(
+        "When asked about flights, always answer directly with available options. "
+        "If the user does not specify departure city or date, politely ask for only the missing information in a single, concise sentence. "
+        "If all required details are provided, respond with a clear summary of available flights, including airline, flight number, departure/arrival cities, times, and status. "
+        "If no flights match, inform the user clearly."
+    ),
     model="gemini-2.5-flash",
     tools=[FunctionTool(flight_query)],
 )
