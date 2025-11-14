@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+.env
+venv/
+.envrc
+*.egg-info/
+*.sqlite3
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VSCode
+.vscode/
+
+# Conda
+*.conda
+*.lock
+
+# Logs
+*.log
+run/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Others
+*.bak
+*.swp

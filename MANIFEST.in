@@ -1,0 +1,4 @@
+include requirements.txt
+include flights_dataset.json
+include mock_hotels.json
+recursive-include agents *
